@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+ 
 }
 
 datasource db {
@@ -25,7 +25,6 @@ model User {
 
 model Note {
   id          String   @id @default(uuid())
-  title       String
   content     String
   isCompleted Boolean  @default(false)
   userId      String
