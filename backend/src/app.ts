@@ -1,9 +1,18 @@
 import express, { Request, Response } from 'express';
 import { success } from 'zod';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { prisma } from './lib/prisma.js';
+import userRouter from './routes/user.routes.js';
 
 export const app = express();
-const PORT = process.env.PORT || 4000;
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+}))
 
 
 
@@ -26,3 +35,5 @@ app.get("/test", async(req: Request, res: Response) => {
         console.log(error);
     }
 })
+
+app.use("/api/v1/users",userRouter)
