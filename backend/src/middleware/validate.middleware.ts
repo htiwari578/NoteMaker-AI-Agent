@@ -16,5 +16,5 @@ export function validateData(schema: z.ZodObject<any,any>) {
                 res.status(500).json({ error: "Internal Server Error" });
             }
         }
-    };
+    }
 }
