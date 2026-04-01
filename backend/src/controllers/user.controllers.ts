@@ -67,6 +67,8 @@ export const registerUser = async(req:Request,res:Response)=>{
     }
 };
 
+
+//user login
 export const userLogin = async(req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
@@ -107,6 +109,32 @@ export const userLogin = async(req: Request, res: Response) => {
         
     } catch (error: unknown) {
         console.error("Error in userLogin", error);
+        if(error instanceof ApiError){
+            return res.status(error.statusCode).json({
+            success:false,
+            message: error.message,
+            errors: error.message 
+        });
+        }
+        return res.status(500).json({
+            success:false,
+            message: "Internal Server Error",
+            errors: [],
+        });
+    }
+};
+
+//user logout
+export const userLogout = async(req: Request, res: Response) => {
+    try {
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+        return res.status(200).json(
+            new ApiResponse(200, null, "User logged out successfully")
+        )
+    } catch (error: unknown) {
+        console.error("Error in userLogout", error);
+        
         if(error instanceof ApiError){
             return res.status(error.statusCode).json({
             success:false,
