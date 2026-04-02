@@ -149,3 +149,39 @@ export const userLogout = async(req: Request, res: Response) => {
         });
     }
 }
+
+export const getCurrentUser = async(req: Request, res: Response) => {
+    try {
+        const userId = req.user?.id;
+
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                createdAt: true,
+            }
+        })
+        if(!user){
+            throw new ApiError(404, "User not found");
+        }
+        return res.status(200).json(
+            new ApiResponse(200, { user }, "Current user fetched successfully")
+        );
+    } catch (error) {
+        console.error("Login error:", error);
+        if (error instanceof ApiError) {
+            return res.status(error.statusCode).json({
+                success: false,
+                message: error.message,
+                errors: error.errors,
+            });
+        }
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            errors: [],
+        });
+    }
+}
