@@ -10,4 +10,12 @@ export const noteService = {
       },
     });
   },
+   async create(userId: string, content: string) {
+    return prisma.note.create({
+      data: {
+        content,
+        userId,
+      },
+    });
+  },
 }
