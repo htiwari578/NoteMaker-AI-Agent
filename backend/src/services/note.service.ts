@@ -18,4 +18,20 @@ export const noteService = {
       },
     });
   },
+    async search(userId: string, query: string) {
+    return prisma.note.findMany({
+      where: {
+        userId,
+        content: {
+          contains: query,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        content: true,
+        isCompleted: true,
+      },
+    });
+  },
 }
