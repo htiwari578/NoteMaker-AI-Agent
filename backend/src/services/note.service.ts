@@ -1,4 +1,5 @@
 import { prisma } from "../lib/prisma.js";
+import { normalize } from "../utils/normalize.js";
 export const noteService = {
   async getAll(userId: string) {
     return prisma.note.findMany({
@@ -33,5 +34,14 @@ export const noteService = {
         isCompleted: true,
       },
     });
+  },
+   async findByContent(userId: string, content: string) {
+    const notes = await prisma.note.findMany({
+      where: { userId },
+    });
+
+    const target = normalize(content);
+
+    return notes.find((note) => normalize(note.content) === target);
   },
 }
