@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { noteTools } from "./tools";
 import { toolRegistery } from "./toolExecutor";
-import th from "zod/v4/locales/th.js";
+
 
 
 
