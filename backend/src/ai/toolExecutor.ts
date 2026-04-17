@@ -1,5 +1,5 @@
-import { noteService } from "../services/note.service";
-import { ToolExecutor } from "../types";
+import { noteService } from "../services/note.service.js";
+import { ToolExecutor } from "../types/index.js";
 
 
 
